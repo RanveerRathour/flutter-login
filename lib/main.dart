@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:music/screen1.dart';
+import 'package:melody_upgrade/homePage.dart';
+
+import 'login.dart';
 
 void main(){
 
@@ -14,9 +16,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: call1(),
+      // home: HomePage(),
+      themeMode: ThemeMode.light,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+      ),
+      initialRoute: "/",
+      routes: {
+        "/":(context)=> login(),
+      },
     );
   }
 }
