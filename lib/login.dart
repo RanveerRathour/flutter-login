@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:melody_upgrade/routes.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,14 +11,14 @@ class _LoginPageState extends State<LoginPage> {
   String name = "";
   bool changeButton = false;
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKey= GlobalKey<FormState>();
 
   moveToHome(BuildContext context) async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         changeButton = true;
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       await Navigator.pushNamed(context, MyRoutes.homeRoute);
       setState(() {
         changeButton = false;
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Username",
                         ),
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value==null) {
                             return "Username cannot be empty";
                           }
                           return null;
@@ -79,11 +80,12 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Password",
                         ),
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value.isEmptyOrNull) {
                             return "Password cannot be empty";
-                          } else if (value.length < 6) {
-                            return "Password length should be atleast 6";
-                          }
+                           }
+                          // else if (value.length < 6) {
+                          //   return "Password length should be atleast 6";
+                          // }
 
                           return null;
                         },
