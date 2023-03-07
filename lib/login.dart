@@ -28,7 +28,7 @@ class _loginState extends State<login> {
             Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: 20),
-              child: Image.asset("assets/images/log.png",
+              child: Image.asset("assets/images/hey.png",
                 fit: BoxFit.cover,
               ),
             ),
@@ -74,59 +74,72 @@ class _loginState extends State<login> {
             const SizedBox(
               height: 30,
             ),
-            InkWell(
-              onTap: (){
-                password=_passwordController.text.toString();
-                if(name.isEmpty)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                     SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        content: Container(
-                      padding: EdgeInsets.all(16),
-                          height: 90,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFC72C41),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: const Text("Please enter username"),
-                    )
-                    ),
-                  );
-                }
-
-                else if(password.isEmpty)
+            Material(
+              borderRadius: changeButton?BorderRadius.circular(50):BorderRadius.circular(10),
+              color: Colors.deepPurple,
+              child: InkWell(
+                onTap: () async{
+                  password=_passwordController.text.toString();
+                  if(name.isEmpty)
                   {
                     ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text(
-                            "Please enter password"
-                        ))
+                       const SnackBar(
+                         content: Text(
+                             "Please enter username"
+                         ),
+                      //   behavior: SnackBarBehavior.floating,
+                      //     backgroundColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     content: Container(
+                      //   padding: EdgeInsets.all(12),
+                      //       height: 50,
+                      //       decoration: const BoxDecoration(
+                      //         color: Color(0xFFC72C41),
+                      //         borderRadius: BorderRadius.all(Radius.circular(20)),
+                      //       ),
+                      //       child: const Center(
+                      //           child: Text("Please enter username",
+                      //           style: TextStyle(fontSize: 22),)),
+                      // ),
+                      ),
                     );
                   }
-                else
-                  {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return const homepage();
-                    }));
-                  }
+                  else if(password.isEmpty)
+                    {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text(
+                              "Please enter password"
+                          ),
+                          )
+                      );
+                    }
+                  else
+                    {
+                      setState(() {
+                        changeButton=true;
+                      });
+                      await Future.delayed(const Duration(seconds: 1));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const homepage();
+                      }));
+                    }
 
-              },
-              child: AnimatedContainer(
-                  height: 45,
-                width: 150,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.deepPurple,
+                },
+
+                child: AnimatedContainer(
+                    height: 45,
+                  width: changeButton?50:150,
+                  alignment: Alignment.center,
+
+                  duration: const Duration(microseconds: 500000),
+                  child: changeButton?const Icon(Icons.done, color: Colors.white,) :const Text(
+                      "Login",
+                      style: TextStyle(
+                      fontSize: 20,
+                          color: Colors.white)
+                  ),
                 ),
-                duration: const Duration(seconds: 1),
-                child: const Text(
-                    "Login",
-                    style: TextStyle(
-                    fontSize: 20,
-                        color: Colors.white)),
               ),
             )
           ],
